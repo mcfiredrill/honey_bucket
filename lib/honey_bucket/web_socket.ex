@@ -10,10 +10,19 @@ defmodule HoneyBucket.WebSocket do
     IO.puts "Received WS Message - Type: #{inspect type} -- Message: #{inspect msg}"
     # pull out session ID
     {:ok, json } = Jason.decode(msg)
-    if json["metadata"]["message_type"] === "session_welcome" do
-      session_id = json["payload"]["session"]["id"] 
-      # create subscriptions with it (POST)
-      subscribe "channel.follow", session_id
+    message_type = json["metadata"]["message_type"]
+    case message_type do
+      "session_welcome" ->
+        session_id = json["payload"]["session"]["id"] 
+        # create subscriptions with it (POST)
+        subscribe "channel.follow", session_id
+      "notification" ->
+        Logger.debug "got a notification"
+        subscription_type = json["metadata"]["subscription_type"]
+        Logger.debug "subscription_type: #{subscription_type}"
+        notify_new_follower json["payload"]["event"]
+      _ ->
+        Logger.debug "unknown websocket message type: #{message_type}"
     end
     {:ok, state}
   end
@@ -21,6 +30,16 @@ defmodule HoneyBucket.WebSocket do
   def handle_cast({:send, {type, msg} = frame}, state) do
     IO.puts "Sending #{type} frame with payload: #{msg}"
     {:reply, frame, state}
+  end
+
+  defp notify_new_follower payload do
+    username = payload["user_login"]
+    message = "#{username} followed!"
+    Logger.debug message
+    { toilet_output, _exit_code } = System.cmd("figlet", ["-f", "small", message])
+    HoneyBucket.FileWriter.write toilet_output, "#660066"
+    video = "/home/tony/dropbox/vids/lain/Copland\ OS\ recreation\ \[zMLNTgomRNk\].mp4"
+    System.cmd("mpv", [video])
   end
 
   defp subscribe(event_type, session_id) do
