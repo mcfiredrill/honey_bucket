@@ -23,6 +23,10 @@ defmodule HoneyBucket.MixProject do
   defp deps do
     [
       {:tmi, git: "https://github.com/mcfiredrill/tmi.ex" },
+      {:websockex, "~> 0.4.3"},
+      {:jason, "~> 1.0"},
+      {:httpoison, "~> 2.0"},
+
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
