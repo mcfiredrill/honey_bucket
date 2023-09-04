@@ -48,8 +48,8 @@ defmodule HoneyBucket.WebSocket do
       type: event_type,
       version: "2",
       condition: %{
-        broadcaster_user_id: "777095801",
-        moderator_user_id: "777095801"
+        broadcaster_user_id: System.get_env("TWITCH_BROADCASTER_ID"),
+        moderator_user_id: System.get_env("TWITCH_BROADCASTER_ID")
       },
       transport: %{
         method: "websocket",
