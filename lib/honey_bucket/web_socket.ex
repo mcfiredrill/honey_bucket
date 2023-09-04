@@ -9,7 +9,7 @@ defmodule HoneyBucket.WebSocket do
   def handle_frame({type, msg}, state) do
     IO.puts "Received WS Message - Type: #{inspect type} -- Message: #{inspect msg}"
     # pull out session ID
-   {:ok, json } = Jason.decode(msg)
+    {:ok, json } = Jason.decode(msg)
     if json["metadata"]["message_type"] === "session_welcome" do
       session_id = json["payload"]["session"]["id"] 
       # create subscriptions with it (POST)
