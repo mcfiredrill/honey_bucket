@@ -8,6 +8,7 @@ defmodule HoneyBucket.Tmi do
     Logger.debug color
     Logger.debug("running toilet")
     { toilet_output, _exit_code } = System.cmd("figlet", ["-f", "small", "#{sender}: #{message}"])
+    write_to_file toilet_output, color
     Logger.debug("Message in #{channel} from #{sender}: #{message}")
   end
 
