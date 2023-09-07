@@ -1,6 +1,6 @@
 # HoneyBucket
 
-**TODO: Add description**
+piping twitch chat to figlet/toilet/etc
 
 ## Installation
 
