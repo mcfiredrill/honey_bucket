@@ -16,6 +16,10 @@ defmodule HoneyBucket.WebSocket do
         session_id = json["payload"]["session"]["id"] 
         # create subscriptions with it (POST)
         subscribe "channel.follow", session_id
+        # TODO
+        # subscribe "channel.subscribe", session_id
+        # subscribe "channel.subscription.gift", session_id
+        # subscribe "channel.cheer", session_id
       "notification" ->
         Logger.debug "got a notification"
         subscription_type = json["metadata"]["subscription_type"]
