@@ -42,7 +42,7 @@ defmodule HoneyBucket.WebSocket do
     Logger.debug message
     video = "/home/tony/dropbox/vids/lain/Copland\ OS\ recreation\ \[zMLNTgomRNk\].mp4"
     System.cmd("sh", ["-c", "mpv --vo=kitty --vo-kitty-alt-screen=no --vo-kitty-config-clear=no '#{video}' >> /tmp/honey_bucket.txt"])
-    { toilet_output, _exit_code } = System.cmd("figlet", ["-f", "small", message])
+    { toilet_output, _exit_code } = System.cmd("toilet", ["-f", "future", "--rainbow", message])
     HoneyBucket.FileWriter.write toilet_output, "#660066"
     # {:ok, file } = File.open "/tmp/honey_bucket.txt", [:append]
     # IO.binwrite file, out

@@ -1,7 +1,7 @@
 defmodule HoneyBucket.FileWriter do
   require Logger
 
-  def write message, color do
+  def write message, color \\ "#ffff00" do
     {:ok, file } = File.open "/tmp/honey_bucket.txt", [:append]
     { red, _ } = color
       |> String.slice(1..-1)
