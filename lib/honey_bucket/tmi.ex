@@ -13,9 +13,214 @@ defmodule HoneyBucket.Tmi do
     end
     Logger.debug color
     Logger.debug("running toilet")
-    { toilet_output, _exit_code } = System.cmd("figlet", ["-f", "chunky", "#{sender}: #{message}"])
+    { toilet_output, _exit_code } = System.cmd("figlet", ["-f", "fbr2____", "#{sender}: #{message}"])
     HoneyBucket.FileWriter.write toilet_output, color
     Logger.debug("Message in #{channel} from #{sender}: #{message}")
+    {:ok , msg } = handle_command(message)
+    say(msg, channel)
+  end
+
+  def handle_command(command) do
+    Logger.debug "the command: #{command}"
+    case command do
+      "!sorry" ->
+        video = "./vids/sorry.mp4"
+        play_video(video)
+
+        msg =
+          "Must have been the onion salad dressing. Right, Brendon? :sorrymusthavebeentheonionsaladdressing:"
+
+        {:ok, msg}
+
+      "!thisisamazing" ->
+        # shell to play
+        System.cmd("play", ["./sfx/thisisamazing.mp3"])
+        msg = "It's just a website"
+        {:ok, msg}
+
+      "!gohackyourself" ->
+        # shell to play
+        System.cmd("play", ["./sfx/go_hack_yourself.wav"])
+        msg = "go hack yourself"
+        {:ok, msg}
+
+      "!pewpew" ->
+        # shell to play
+        System.cmd("play", ["./sfx/PEWPEW.wav"])
+        msg = "pewpew"
+        {:ok, msg}
+
+      "!bass" ->
+        # shell to play
+        System.cmd("play", ["./sfx/bass.mp3"])
+        msg = "BASS"
+        {:ok, msg}
+
+      "!scream" ->
+        # shell to play
+        System.cmd("play", ["./sfx/somebody_scream.wav"])
+        msg = "c'mon ethel let's get outta here"
+        {:ok, msg}
+
+      "!internet" ->
+        # shell to play
+        System.cmd("play", ["./sfx/internet.wav"])
+        msg = "https://www.youtube.com/watch?v=ip34OUo3IS0"
+        {:ok, msg}
+
+      "!penith" ->
+        # shell to play
+        System.cmd("play", ["./sfx/penith.wav"])
+        msg = ":dizzy:"
+        {:ok, msg}
+
+      "!ballin" ->
+        # shell to play
+        System.cmd("play", ["./sfx/ballin.wav"])
+        msg = ":lain_dad:"
+        {:ok, msg}
+
+      "!duck" ->
+        # shell to play
+        video = "./vids/duck_rotation.mp4"
+        play_video(video)
+        msg = ":duckle:"
+        {:ok, msg}
+
+      "!fries" ->
+        # shell to play
+        System.cmd("play", ["./sfx/greasy_fries.ogg"])
+        msg = ":greasyhotdogs:"
+        {:ok, msg}
+
+      "!hotdogs" ->
+        # shell to play
+        System.cmd("play", ["./sfx/greasy_hotd.ogg"])
+        msg = ":greasyhotdogs:"
+        {:ok, msg}
+
+      "!bug" ->
+        # shell to play
+        System.cmd("play", ["./sfx/bug.mp3"])
+        msg = "FIX THAT BUG"
+        {:ok, msg}
+
+      "!gj" ->
+        # shell to play
+        video = "./vids/gj.mp4"
+        play_video(video)
+        msg = ":goodbeverage:"
+        {:ok, msg}
+
+      "!false" ->
+        # shell to play
+        System.cmd("play", ["./sfx/false.mp3"])
+        msg = "it never happened"
+        {:ok, msg}
+
+      "!totalfabrication" ->
+        # shell to play
+        System.cmd("play", ["./sfx/total_fabrication.mp3"])
+        msg = "it's a total fabrication"
+        {:ok, msg}
+
+      "!boost" ->
+        # shell to play
+        System.cmd("play", ["./sfx/boostyrdesktoplifestyle.mp3"])
+        msg = ":marty:"
+        {:ok, msg}
+
+      "!computers" ->
+        # shell to play
+        System.cmd("play", ["./sfx/computers.mp3"])
+        msg = "I hope we all learned about computers"
+        {:ok, msg}
+
+      "!done" ->
+        # shell to play
+        System.cmd("play", ["./sfx/done.mp3"])
+        msg = "and yr done"
+        {:ok, msg}
+
+      "!onionrings" ->
+        # shell to play
+        System.cmd("play", ["./sfx/greasy_onion_rings.ogg"])
+        msg = ":greasyhotdogs:"
+        {:ok, msg}
+
+      "!awake" ->
+        # shell to play
+        System.cmd("play", ["./sfx/alive_alert_awake.mp3"])
+        msg = ":alive_alert_awake:"
+        {:ok, msg}
+
+      "!mustard" ->
+        video = "/home/tony/dropbox/video\ projects/rendered/mustard_fixed.mp4"
+        play_video(video)
+        msg = "all i have to do is find the mustard and i'm in good shape"
+        {:ok, msg}
+
+      "!developers" ->
+        video = "./vids/developers.mp4"
+        play_video(video)
+        msg = "DEVELOPERS"
+        {:ok, msg}
+
+      "!sfx" ->
+        # can we pull the list of sfx automatically somehow?
+        list = """
+        !sorry
+        !thisisamazing
+        !gohackyourself
+        !pewpew
+        !bass
+        !scream
+        !internet
+        !penith
+        !ballin
+        !duck
+        !fries
+        !hotdogs
+        !onionrings
+        !gj
+        !bug
+        !computers
+        !done
+        !false
+        !totalfabrication
+        !boost
+        """
+
+        {:ok, list}
+
+
+      "!commands" ->
+        # can we pull the list of commands automatically somehow?
+        list = """
+        !vr
+        !donate
+        !advice
+        !sorry
+        !thisisamazing
+        !gohackyourself
+        !next
+        !wiki
+        !tag
+        !datafruiter
+        !commands
+        """
+
+        {:ok, list}
+
+      _ ->
+        IO.puts("unhandled command: #{command}")
+        # Elixir prefers two-element tuples esp. for :ok and :error
+        {:error, :bad_command}
+    end
+  end
+
+  defp play_video(video_path) do
+    System.cmd("sh", ["-c", "mpv --vo=kitty --vo-kitty-alt-screen=no --vo-kitty-config-clear=no '#{video_path}' >> /tmp/honey_bucket.txt"])
   end
 
   # defp user_color(username) do
@@ -37,9 +242,9 @@ defmodule HoneyBucket.Tmi do
   #     {"Content-Type", "application/json"},
   #   ]
   #   {:ok, response } = HTTPoison.get url, headers
-  #   body = Jason.decode!(response.body)    
-  #   data = body["data"]    
-  #   first_result = Enum.at(data, 0)    
+  #   body = Jason.decode!(response.body)
+  #   data = body["data"]
+  #   first_result = Enum.at(data, 0)
   #   first_result["id"]
   # end
 end
