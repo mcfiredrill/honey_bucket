@@ -1,4 +1,15 @@
 - [] kofi integration
-https://ko-fi.com/manage/webhooks?src=sidemenu  
+https://ko-fi.com/manage/webhooks?src=sidemenu
 
 - [] parse emotes for display
+
+- [] pipe datafruits chat to /tmp/honey_bucket.txt and also to twitch????
+
+ideas
+* play video of sfx in honey_bucket.txt
+* allow any youtube video to be played???
+
+----
+move coach sfx commands to here
+
+pipe videos in terminal when sfx with a video are played
