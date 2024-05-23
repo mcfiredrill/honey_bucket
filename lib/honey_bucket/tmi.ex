@@ -17,6 +17,7 @@ defmodule HoneyBucket.Tmi do
     HoneyBucket.FileWriter.write toilet_output, color
     Logger.debug("Message in #{channel} from #{sender}: #{message}")
     {:ok , msg } = handle_command(message)
+    Logger.debug msg
     say(msg, channel)
   end
 
@@ -32,13 +33,13 @@ defmodule HoneyBucket.Tmi do
 
         {:ok, msg}
 
-      "!thisisamazing" ->
+      _ when command in ["!thisisamazing", "!amazing"] ->
         # shell to play
         System.cmd("play", ["./sfx/thisisamazing.mp3"])
         msg = "It's just a website"
         {:ok, msg}
 
-      "!gohackyourself" ->
+      _ when command in ["!gohackyourself", "!hack"] ->
         # shell to play
         System.cmd("play", ["./sfx/go_hack_yourself.wav"])
         msg = "go hack yourself"
@@ -80,22 +81,22 @@ defmodule HoneyBucket.Tmi do
         msg = ":lain_dad:"
         {:ok, msg}
 
-      "!duck" ->
+      _ when command in ["!duck", "!ducks"] ->
         # shell to play
         video = "./vids/duck_rotation.mp4"
         play_video(video)
         msg = ":duckle:"
         {:ok, msg}
 
-      "!fries" ->
+      _ when command in ["!fries", "!greasyfries"] ->
         # shell to play
-        System.cmd("play", ["./sfx/greasy_fries.ogg"])
+        System.cmd("play", ["./sfx/greasy_fries.wav"])
         msg = ":greasyhotdogs:"
         {:ok, msg}
 
-      "!hotdogs" ->
+      _ when command in ["!hotdogs", "!greasyhotdogs"] ->
         # shell to play
-        System.cmd("play", ["./sfx/greasy_hotd.ogg"])
+        System.cmd("play", ["./sfx/greasy_hotd.wav"])
         msg = ":greasyhotdogs:"
         {:ok, msg}
 
@@ -118,7 +119,7 @@ defmodule HoneyBucket.Tmi do
         msg = "it never happened"
         {:ok, msg}
 
-      "!totalfabrication" ->
+      _ when command in ["!totalfabrication", "!fabrication"] ->
         # shell to play
         System.cmd("play", ["./sfx/total_fabrication.mp3"])
         msg = "it's a total fabrication"
@@ -142,9 +143,9 @@ defmodule HoneyBucket.Tmi do
         msg = "and yr done"
         {:ok, msg}
 
-      "!onionrings" ->
+      _ when command in ["!onionrings", "!greasyonionrings"] ->
         # shell to play
-        System.cmd("play", ["./sfx/greasy_onion_rings.ogg"])
+        System.cmd("play", ["./sfx/greasy_onion_rings.wav"])
         msg = ":greasyhotdogs:"
         {:ok, msg}
 
@@ -164,6 +165,21 @@ defmodule HoneyBucket.Tmi do
         video = "./vids/developers.mp4"
         play_video(video)
         msg = "DEVELOPERS"
+        {:ok, msg}
+
+      _ when command in ["!crunch", "!eat", "!chomp"] ->
+        # shell to play
+        System.cmd("play", ["./sfx/crunch.mp3"])
+        msg = "yummers"
+        {:ok, msg}
+
+      "!cheese" ->
+        System.cmd("play", ["./sfx/cheese.mp3"])
+        msg = "now that's my kind of cheese"
+        {:ok, msg}
+
+      "!discord" ->
+        msg = "join da burgerzone discord -> https://discord.gg/bkNFZjgPBN"
         {:ok, msg}
 
       "!sfx" ->
